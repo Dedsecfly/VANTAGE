@@ -1,0 +1,171 @@
+/* src/app/globals.css - Institutional UI - VANTAGE Financial Terminal */
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@400;500&family=Stack+Sans+Headline:wght@300&display=swap');
+
+@theme {
+  /* Institutional color scheme from direction sheet - Obsidian-black, deep graphite, champagne-gold, platinum */
+  --color-bg: #0a0a0a;
+  --color-surface: #1b0e17;
+  --color-ink: #ffffff;
+  --color-muted: #5c5852;
+  --color-accent: #256f82;
+  --color-accent-ink: #ffffff;
+  --color-field-1: #470c35;
+  --color-field-1-ink: #ffffff;
+  --color-field-2: #ffffff;
+  --color-field-2-ink: #101421;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-border: #332e38;
+
+  /* Typography steps */
+  --font-size-step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --font-size-step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --font-size-step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --font-size-step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+
+  --font-family-sans: 'Stack Sans Text', sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Motion tokens from product-performs direction sheet */
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.2, 0, 0.38, 1.15);
+  --ease-exit: cubic-bezier(0.5, 0.01, 1, 0.5);
+  --t-press: 100ms;
+  --t-hover: 180ms;
+  --t-ui: 200ms;
+  --t-reveal: 600ms;
+  --t-open: 900ms;
+  --stagger-line: 80ms;
+  --stagger-item: 120ms;
+}
+
+@layer base {
+  /* Body defaults */
+  body {
+    font-family: var(--font-family-sans);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    margin: 0;
+    min-height: 100vh;
+    font-size: var(--font-size-step-body);
+    line-height: 1.5;
+  }
+
+  /* Links */
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #ff6ab0;
+  }
+
+  /* Focus styles */
+  :focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-field-1);
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  /* Animation utilities */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@layer components {
+  /* Button styles */
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .btn-primary:hover {
+    background-color: #e63975;
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-border);
+  }
+}
+
+/* Custom utility classes for institutional styling - kept for backwards compatibility */
+.bg-bg { background-color: var(--color-bg); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-card { background-color: var(--color-surface); }
+.bg-field-1 { background-color: var(--color-field-1); }
+.bg-field-2 { background-color: var(--color-field-2); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-accent-ink { background-color: var(--color-accent-ink); }
+.bg-success { background-color: var(--color-success); }
+.bg-warning { background-color: var(--color-warning); }
+.bg-error { background-color: var(--color-error); }
+
+.text-ink { color: var(--color-ink); }
+.text-muted { color: var(--color-muted); }
+.text-accent { color: var(--color-accent); }
+.text-accent-ink { color: var(--color-accent-ink); }
+.text-field-1-ink { color: var(--color-field-1-ink); }
+.text-field-2-ink { color: var(--color-field-2-ink); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+
+.border-border { border-color: var(--color-border); }
+
+/* Typography classes */
+.font-archivo { font-family: var(--font-family-sans); }
+.text-step-small { font-size: var(--font-size-step-small); }
+.text-step-body { font-size: var(--font-size-step-body); }
+.text-step-lead { font-size: var(--font-size-step-lead); }
+.text-step-head { font-size: var(--font-size-step-head); }

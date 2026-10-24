@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+/.pnpm/
+/.yarn/
+
+# Testing
+.coverage/
+
+# Production
+build/
+.next/
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+husky.log
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local
+.lasignatures/
+.pnp.js
+.pnp.cjs
+.pnp.lock.json
+
+# IDE
+.idea/
+.vscode/
+
+# Tailwind
+tailwind.css
+
+# TypeScript
+*.tsbuildinfo

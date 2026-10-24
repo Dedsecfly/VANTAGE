@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+/.packages/
+
+# Environment
+.env*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+venv7/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/

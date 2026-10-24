@@ -1,0 +1,33 @@
+import type { Config } from 'tailwindcss'
+import { fontFamily } from 'tailwindcss/defaultTheme'
+
+const config: Config = {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{html,js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: 'hsl(0 0% 3%)',
+        foreground: 'hsl(0 0% 98%)',
+        card: 'hsl(0 0% 5%)',
+        border: 'hsl(0 0% 15%)',
+        muted: 'hsl(0 0% 25%)',
+        accent: 'hsl(45 100% 50%)',
+        success: 'hsl(140 40% 45%)',
+        warning: 'hsl(45 100% 55%)',
+        error: 'hsl(0 80% 50%)',
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', ...fontFamily.sans],
+      },
+      borderRadius: {
+        DEFAULT: '0.5rem',
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+}
+
+export default config
