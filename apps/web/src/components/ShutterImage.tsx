@@ -1,5 +1,6 @@
 'use client';
 
+/* eslint-disable react/no-unknown-property */
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ShutterImageProps {
@@ -46,7 +47,7 @@ export const ShutterImage: React.FC<ShutterImageProps> = ({
         '--ease-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
         '--ease-out': 'cubic-bezier(0.25, 1, 0.5, 1)',
         '--t-hover': '180ms',
-      }}
+      } as React.CSSProperties}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -56,7 +57,7 @@ export const ShutterImage: React.FC<ShutterImageProps> = ({
         style={{
           clipPath: isLoaded ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
           transition: `clip-path var(--t-open) var(--ease-expo) ${isLoaded ? '0ms' : '200ms'}`,
-        }}
+        } as React.CSSProperties}
       >
         <img
           ref={imgRef}
@@ -178,7 +179,7 @@ export const MovingPicture: React.FC<MovingPictureProps> = ({
         aspectRatio,
         '--t-ui': '200ms',
         '--ease-out': 'cubic-bezier(0.25, 1, 0.5, 1)',
-      }}
+      } as React.CSSProperties}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

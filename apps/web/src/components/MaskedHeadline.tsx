@@ -1,5 +1,6 @@
 'use client';
 
+/* eslint-disable react/no-unknown-property */
 import React, { useEffect, useState } from 'react';
 
 interface MaskedHeadlineProps {
@@ -36,7 +37,7 @@ export const MaskedHeadline: React.FC<MaskedHeadlineProps> = ({
   if (lines.length === 0) return null;
 
   return (
-    <div className={`masked-headline ${className}`} style={{ '--delay': `${delay}ms` }}>
+    <div className={`masked-headline ${className}`} style={{ '--delay': `${delay}ms` } as React.CSSProperties}>
       {lines.map((line, index) => (
         <div
           key={index}
@@ -45,7 +46,7 @@ export const MaskedHeadline: React.FC<MaskedHeadlineProps> = ({
             '--stagger': `${index * 80}ms`,
             '--t-reveal': '600ms',
             '--ease-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
+          } as React.CSSProperties}
         >
           <span className="masked-line__inner">{line}</span>
         </div>
@@ -128,7 +129,7 @@ export const RevealOnScroll: React.FC<RevealOnScrollProps> = ({
       style={{
         '--t-reveal': '600ms',
         '--ease-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
-      }}
+      } as React.CSSProperties}
     >
       {children}
       <style jsx>{`
@@ -227,7 +228,7 @@ export const PressFeedback: React.FC<PressFeedbackProps> = ({
         '--ease-soft': 'cubic-bezier(0.2, 0, 0.38, 1.15)',
         transform: isPressed ? 'scale(0.98)' : 'scale(1)',
         transition: 'transform var(--t-press) var(--ease-soft)',
-      }}
+      } as React.CSSProperties}
     >
       {children}
     </div>
@@ -260,7 +261,7 @@ export const HoverLift: React.FC<HoverLiftProps> = ({
         transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
         boxShadow: isHovered ? '0 12px 32px rgba(0, 0, 0, 0.4)' : 'none',
         transition: 'transform var(--t-hover) var(--ease-out), box-shadow var(--t-hover) var(--ease-out)',
-      }}
+      } as React.CSSProperties}
     >
       {children}
     </div>

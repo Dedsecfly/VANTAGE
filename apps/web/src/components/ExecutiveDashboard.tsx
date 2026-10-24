@@ -1,199 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { MaskedHeadline, RevealOnScroll, StaggeredChildren, PressFeedback, HoverLift } from './MaskedHeadline';
-import { MovingPicture, ParallaxScroll } from './ShutterImage';
+import { useState } from 'react';
+import { ArrowUpRight, BarChart3, BookOpen, ChevronRight, CircleAlert, Database, FileText, FolderKanban, LockKeyhole, Plus, RefreshCw, ShieldCheck, Sparkles } from 'lucide-react';
 
-interface PlatformStatus {
-  label: string;
-  value: number | string;
-  status: 'success' | 'warning' | 'error';
-  trend: 'up' | 'down' | 'flat';
+const models = [{ name: 'Northstar — Integrated Model', type: 'Three-statement model', edited: 'Edited 2 days ago', status: 'Draft' }, { name: 'Orion Capital — LBO Case', type: 'LBO analysis', edited: 'Edited 5 days ago', status: 'Draft' }, { name: 'Apex Systems — DCF Valuation', type: 'DCF valuation', edited: 'Edited 1 week ago', status: 'Review' }];
+
+function SectionTitle({ eyebrow, title, action }: { eyebrow: string; title: string; action?: string }) { return <div className="mb-4 flex items-end justify-between"><div><div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">{eyebrow}</div><h2 className="text-base font-medium tracking-tight text-foreground">{title}</h2></div>{action && <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-gold">{action}<ChevronRight /></button>}</div>; }
+function EmptyState({ icon: Icon, title, body, action }: { icon: typeof Database; title: string; body: string; action?: string }) { return <div className="flex min-h-[145px] flex-col items-center justify-center border border-dashed border-border bg-muted/10 px-5 text-center"><Icon className="mb-3 text-muted-foreground" /><div className="text-xs font-medium text-foreground">{title}</div><p className="mt-1 max-w-xs text-[11px] leading-relaxed text-muted-foreground">{body}</p>{action && <button className="mt-3 text-[11px] font-medium text-gold hover:underline">{action}</button>}</div>; }
+
+export default function ExecutiveDashboard() {
+  const [scenario, setScenario] = useState('Base case');
+  const [syncing, setSyncing] = useState(false);
+  const sync = () => { setSyncing(true); window.setTimeout(() => setSyncing(false), 900); };
+  return <main className="mx-auto w-full max-w-[1500px] px-6 py-7 lg:px-8">
+    <div className="mb-8 flex flex-col justify-between gap-5 border-b border-border pb-6 md:flex-row md:items-end"><div><div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground"><span className="size-1.5 rounded-full bg-emerald-500" />System ready</div><h1 className="text-2xl font-medium tracking-tight text-foreground md:text-3xl">Good morning, James.</h1><p className="mt-2 max-w-xl text-sm text-muted-foreground">Your financial intelligence workspace is ready. Start with a model, review your research, or connect a data source.</p></div><div className="flex gap-2"><button onClick={sync} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs text-muted-foreground hover:border-gold/50 hover:text-foreground"><RefreshCw className={syncing ? 'animate-spin' : ''} />{syncing ? 'Syncing' : 'Refresh status'}</button><button className="flex items-center gap-2 rounded-md bg-gold px-3 py-2 text-xs font-semibold text-background hover:bg-gold/90"><Plus />New model</button></div></div>
+    <section className="mb-8 grid gap-3 md:grid-cols-2 xl:grid-cols-4"><div className="border border-gold/30 bg-gold/5 p-4"><div className="mb-5 flex items-center justify-between"><span className="text-[10px] uppercase tracking-widest text-gold">Platform readiness</span><ShieldCheck className="text-gold" /></div><div className="font-mono text-2xl text-foreground">Ready</div><div className="mt-2 text-[11px] text-muted-foreground">Frontend shell operational</div></div><div className="border border-border bg-panel p-4"><div className="mb-5 flex items-center justify-between"><span className="text-[10px] uppercase tracking-widest text-muted-foreground">Data connections</span><Database className="text-muted-foreground" /></div><div className="font-mono text-2xl text-foreground">0 <span className="text-sm text-muted-foreground">active</span></div><div className="mt-2 text-[11px] text-muted-foreground">Connect a provider to begin</div></div><div className="border border-border bg-panel p-4"><div className="mb-5 flex items-center justify-between"><span className="text-[10px] uppercase tracking-widest text-muted-foreground">Model library</span><FolderKanban className="text-muted-foreground" /></div><div className="font-mono text-2xl text-foreground">03 <span className="text-sm text-muted-foreground">drafts</span></div><div className="mt-2 text-[11px] text-muted-foreground">Saved in this workspace</div></div><div className="border border-border bg-panel p-4"><div className="mb-5 flex items-center justify-between"><span className="text-[10px] uppercase tracking-widest text-muted-foreground">Engine status</span><LockKeyhole className="text-muted-foreground" /></div><div className="font-mono text-2xl text-foreground">Setup</div><div className="mt-2 text-[11px] text-muted-foreground">Calculation backend not connected</div></div></section>
+    <div className="grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.75fr)]"><div className="min-w-0"><SectionTitle eyebrow="Workspace" title="Recent models" action="View library" /><div className="overflow-x-auto border border-border bg-panel"><table className="w-full min-w-[600px] text-left"><thead className="border-b border-border bg-muted/10 text-[10px] uppercase tracking-widest text-muted-foreground"><tr><th className="px-4 py-3 font-medium">Model</th><th className="px-4 py-3 font-medium">Type</th><th className="px-4 py-3 font-medium">Last activity</th><th className="px-4 py-3 font-medium">Status</th><th /></tr></thead><tbody>{models.map((model) => <tr key={model.name} className="border-b border-border last:border-0 hover:bg-muted/10"><td className="px-4 py-4 text-xs font-medium text-foreground">{model.name}</td><td className="px-4 py-4 text-xs text-muted-foreground">{model.type}</td><td className="px-4 py-4 text-xs text-muted-foreground">{model.edited}</td><td className="px-4 py-4"><span className="border border-border px-2 py-1 text-[10px] text-muted-foreground">{model.status}</span></td><td className="px-4 py-4 text-right"><ArrowUpRight className="ml-auto text-muted-foreground" /></td></tr>)}</tbody></table></div><div className="mt-8"><SectionTitle eyebrow="Research workspace" title="Saved intelligence" action="Open reports" /><div className="grid gap-3 md:grid-cols-2"><EmptyState icon={BookOpen} title="No research reports" body="Reports you save from the research workspace will appear here." action="Explore research" /><EmptyState icon={BarChart3} title="No watchlists" body="Track companies and sectors once a data provider is connected." action="Create watchlist" /></div></div></div><div><SectionTitle eyebrow="Connectivity" title="Data providers" action="Manage" /><div className="flex flex-col gap-2">{['Market data', 'Fundamentals', 'Macroeconomics'].map((name) => <div key={name} className="flex items-center justify-between border border-border bg-panel p-3"><div className="flex items-center gap-3"><div className="flex size-8 items-center justify-center bg-muted/20"><Database className="text-muted-foreground" /></div><div><div className="text-xs text-foreground">{name}</div><div className="mt-0.5 text-[10px] text-muted-foreground">Not configured</div></div></div><button className="text-[10px] text-gold hover:underline">Connect</button></div>)}</div><div className="mt-8 border border-border bg-panel p-4"><SectionTitle eyebrow="Model context" title="Scenario preview" /><div className="mb-4 flex items-center justify-between"><span className="text-xs text-muted-foreground">Active scenario</span><select value={scenario} onChange={(event) => setScenario(event.target.value)} className="border border-border bg-background px-2 py-1 text-xs text-foreground outline-none"><option>Base case</option><option>Upside case</option><option>Downside case</option></select></div><EmptyState icon={CircleAlert} title="Calculation engine unavailable" body="Connect the Python/FastAPI calculation service to preview model outputs. No financial results are being estimated locally." /></div><div className="mt-8 border border-gold/20 bg-gold/5 p-4"><div className="flex items-start gap-3"><Sparkles className="shrink-0 text-gold" /><div><div className="text-xs font-medium text-foreground">AI analyst setup required</div><p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">The analyst workspace is ready for a provider connection. No responses are simulated in this frontend.</p><button className="mt-3 flex items-center gap-1 text-[11px] font-medium text-gold">Configure workspace <ChevronRight /></button></div></div></div></div></div>
+    <div className="mt-10 flex items-center gap-2 border-t border-border pt-4 text-[10px] text-muted-foreground"><FileText />Frontend preview · Financial calculations, market data, and AI responses require backend connections.</div>
+  </main>;
 }
-
-interface PlatformMetric {
-  label: string;
-  value: number;
-  unit: string;
-  status: 'success' | 'warning' | 'error';
-}
-
-const StatusCard: React.FC<{ status: PlatformStatus; index: number }> = ({ status, index }) => (
-  <RevealOnScroll threshold={0.1} rootMargin="0px 0px -30px 0px" style={{ '--stagger': `${index * 120}ms` }}>
-    <HoverLift className="bg-card p-4 rounded-lg border border-border">
-      <div className="flex justify-between items-start mb-2">
-        <span className="text-sm text-muted">{status.label}</span>
-        <span
-          className={`text-xs px-2 py-1 rounded-full ${
-            status.status === 'success' ? 'bg-success/20 text-success' :
-            status.status === 'warning' ? 'bg-warning/20 text-warning' :
-            'bg-error/20 text-error'
-          }`}
-        >
-          {status.status}
-        </span>
-      </div>
-      <div className="text-2xl font-bold text-ink mb-1">
-        {typeof status.value === 'number' ? status.value.toFixed(1) : status.value}
-      </div>
-      <div className="flex items-center text-sm text-muted">
-        <span
-          className={`mr-1 ${
-            status.trend === 'up' ? 'text-success' :
-            status.trend === 'down' ? 'text-error' :
-            'text-muted'
-          }`}
-        >
-          {status.trend === 'up' ? '▲' : status.trend === 'down' ? '▼' : '—'}
-        </span>
-        {status.trend}
-      </div>
-    </HoverLift>
-  </RevealOnScroll>
-);
-
-const MetricCard: React.FC<{ metric: PlatformMetric; index: number }> = ({ metric, index }) => (
-  <RevealOnScroll threshold={0.1} rootMargin="0px 0px -30px 0px" style={{ '--stagger': `${index * 120}ms` }}>
-    <HoverLift className="text-center p-4">
-      <div className="text-sm text-muted mb-1">{metric.label}</div>
-      <div className="text-2xl font-bold text-ink">
-        {metric.value.toLocaleString()}{metric.unit}</div>
-      <div className="text-xs text-muted mt-1">
-        <span
-          className={`inline-block mr-1 ${
-            metric.status === 'success' ? 'text-success' :
-            metric.status === 'warning' ? 'text-warning' :
-            'text-error'
-          }`}
-        >
-          {metric.status === 'success' ? '✓' :
-          metric.status === 'warning' ? '⚠' :
-          '✗'}
-        </span>
-      </div>
-    </HoverLift>
-  </RevealOnScroll>
-);
-
-const ExecutiveDashboard: React.FC = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const platformStatus: PlatformStatus[] = [
-    {
-      label: 'Platform Readiness',
-      value: 98.7,
-      status: 'success',
-      trend: 'up',
-    },
-    {
-      label: 'Data Sync',
-      value: 'In Progress',
-      status: 'warning',
-      trend: 'flat',
-    },
-    {
-      label: 'Alerts',
-      value: 3,
-      status: 'error',
-      trend: 'up',
-    },
-    {
-      label: 'System Health',
-      value: 99.9,
-      status: 'success',
-      trend: 'up',
-    },
-    {
-      label: 'User Activity',
-      value: 124,
-      status: 'success',
-      trend: 'up',
-    },
-  ];
-
-  const platformMetrics: PlatformMetric[] = [
-    {
-      label: 'Total Users',
-      value: 4287,
-      unit: '',
-      status: 'success',
-    },
-    {
-      label: 'Active Sessions',
-      value: 124,
-      unit: '',
-      status: 'success',
-    },
-    {
-      label: 'Data Points Processed',
-      value: 1200000,
-      unit: 'k',
-      status: 'success',
-    },
-    {
-      label: 'API Calls',
-      value: 8421,
-      unit: '',
-      status: 'success',
-    },
-  ];
-
-  return (
-    <div className="p-8 max-w-6xl mx-auto mt-16">
-      <RevealOnScroll threshold={0.05} rootMargin="0px 0px -100px 0px">
-        <div className="text-center mb-12" style={{ opacity: isLoaded ? 1 : 0, transform: isLoaded ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1)' }}>
-          <MaskedHeadline
-            text="VANTAGE: Institutional\nFinancial Intelligence Terminal"
-            className="text-step-head font-[Stack_Sans_Headline] font-light text-ink mb-4 leading-tight"
-            delay={200}
-          />
-          <p className="text-lg text-muted max-w-2xl mx-auto" style={{ opacity: isLoaded ? 1 : 0, transform: isLoaded ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms, transform 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms' }}>
-            A comprehensive platform for financial analysis, modeling, and intelligence
-          </p>
-        </div>
-      </RevealOnScroll>
-
-      {/* Moving Picture / Atmosphere - per product-performs direction sheet (Sky and space set) */}
-      <RevealOnScroll threshold={0.1} rootMargin="0px 0px -50px 0px" style={{ marginBottom: '3rem' }}>
-        <ParallaxScroll speed={0.3} className="max-w-4xl mx-auto">
-          <MovingPicture
-            videoSrc="https://assets.mixkit.co/videos/preview/mixkit-stars-in-night-sky-1695-large.mp4"
-            posterSrc="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200&h=675&fit=crop"
-            alt="Deep space atmosphere - institutional financial terminal backdrop"
-            aspectRatio="16/9"
-            className="rounded-xl border border-border/50"
-          />
-        </ParallaxScroll>
-      </RevealOnScroll>
-
-      <RevealOnScroll threshold={0.1} rootMargin="0px 0px -50px 0px">
-        <div className="bg-surface p-6 rounded-lg border border-border mb-12">
-          <h2 className="text-xl font-semibold text-ink mb-6">Platform Status</h2>
-          <StaggeredChildren staggerMs={120} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {platformStatus.map((status, index) => (
-              <StatusCard key={status.label} status={status} index={index} />
-            ))}
-          </StaggeredChildren>
-        </div>
-      </RevealOnScroll>
-
-      <RevealOnScroll threshold={0.1} rootMargin="0px 0px -50px 0px">
-        <div className="bg-surface p-6 rounded-lg border border-border">
-          <h2 className="text-xl font-semibold text-ink mb-4">Platform Metrics</h2>
-          <StaggeredChildren staggerMs={120} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {platformMetrics.map((metric, index) => (
-              <MetricCard key={metric.label} metric={metric} index={index} />
-            ))}
-          </StaggeredChildren>
-        </div>
-      </RevealOnScroll>
-    </div>
-  );
-};
-
-export default ExecutiveDashboard;

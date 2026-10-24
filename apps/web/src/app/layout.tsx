@@ -1,18 +1,10 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'VANTAGE',
-  description: 'Quantitative Analysis Platform',
+  title: 'VANTAGE — Financial Intelligence Terminal',
+  description: 'Institutional financial modeling, research, and intelligence workspace.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body className="bg-bg font-archivo text-ink">{children}</body>
-    </html>
-  )
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <html lang="en"><body>{children}</body></html>
 }

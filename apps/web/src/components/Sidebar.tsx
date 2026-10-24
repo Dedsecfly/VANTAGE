@@ -1,106 +1,52 @@
 'use client';
 
-import React, { useState } from 'react';
-import { PressFeedback, HoverLift } from './MaskedHeadline';
+import { useState } from 'react';
+import {
+  Activity, BarChart3, BookOpen, BriefcaseBusiness, Building2, Calculator,
+  ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Database,
+  FileBarChart, FolderKanban, Gauge, Landmark, LineChart, ListFilter,
+  PanelLeft, PieChart, Settings2, ShieldCheck, Sparkles, Table2, WalletCards,
+} from 'lucide-react';
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  onToggle: () => void;
-}
+interface SidebarProps { isCollapsed: boolean; onToggle: () => void }
 
-const sections = [
-  { id: 'executive-dashboard', label: 'Executive Dashboard', icon: '📊' },
-  { id: 'company-intelligence', label: 'Company Intelligence', icon: '🏢' },
-  { id: 'market-intelligence', label: 'Market Intelligence', icon: '📈' },
-  { id: 'financial-modeling', label: 'Financial Modeling', icon: '📊' },
-  { id: 'investment-banking', label: 'Investment Banking', icon: '💰' },
-  { id: 'asset-management', label: 'Asset Management', icon: '📈' },
-  { id: 'corporate-finance', label: 'Corporate Finance', icon: '📊' },
-  { id: 'intelligence', label: 'Intelligence', icon: '🤖' },
-  { id: 'workspace', label: 'Workspace', icon: '📁' },
-];
+const groups = [
+  { label: 'Overview', items: [['Executive Dashboard', Gauge], ['Company Intelligence', Building2], ['Market Intelligence', LineChart]] },
+  { label: 'Financial Modeling', items: [['Financial Statements', Table2], ['Three-Statement Model', Calculator], ['DCF Valuation', BarChart3], ['WACC Calculator', Activity], ['Comparable Companies', ListFilter], ['Financial Ratios', PieChart]] },
+  { label: 'Investment Banking', items: [['M&A Analysis', BriefcaseBusiness], ['LBO Modeling', Landmark], ['Equity Research', BookOpen]] },
+  { label: 'Asset Management', items: [['Portfolio Analytics', WalletCards], ['Risk Management', ShieldCheck], ['Fixed Income', FileBarChart], ['Derivatives', Activity], ['Quantitative Analytics', BarChart3]] },
+  { label: 'Corporate Finance', items: [['FP&A', Database], ['Capital Structure', Landmark], ['Private Equity & VC', BriefcaseBusiness]] },
+  { label: 'Intelligence', items: [['AI Financial Analyst', Sparkles], ['Financial Data Intelligence', Database]] },
+  { label: 'Workspace', items: [['Model Library', FolderKanban], ['Research Reports', BookOpen], ['Export Center', FileBarChart], ['Settings', Settings2]] },
+] as const;
 
-const NavItem: React.FC<{ section: typeof sections[0]; isActive: boolean; onClick: () => void; isCollapsed: boolean }> = ({
-  section,
-  isActive,
-  onClick,
-  isCollapsed
-}) => (
-  <PressFeedback onClick={onClick} className="w-full">
-    <HoverLift
-      className={`px-4 py-2 rounded-md transition-colors flex items-center ${
-        isActive
-          ? 'bg-accent/10 text-accent font-medium'
-          : 'hover:bg-accent/5 text-muted'
-      }`}
-      style={{ opacity: isCollapsed ? 0 : 1, width: isCollapsed ? '0' : 'auto', overflow: 'hidden' }}
-    >
-      <span className="mr-3 text-lg flex-shrink-0">{section.icon}</span>
-      <span className="truncate">{section.label}</span>
-    </HoverLift>
-  </PressFeedback>
-);
-
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
-  const [activeSection, setActiveSection] = useState<string>('executive-dashboard');
+export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
+  const [active, setActive] = useState('Executive Dashboard');
+  const [open, setOpen] = useState<Record<string, boolean>>({ Overview: true, 'Financial Modeling': true, 'Investment Banking': true });
 
   return (
-    <div
-      className={`fixed left-0 top-0 h-full bg-surface/95 backdrop-blur-sm border-r border-border transition-all duration-300 ease-in-out ${
-        isCollapsed ? 'w-16' : 'w-64'
-      }`}
-      style={{
-        transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-      }}
-    >
-      <div className="p-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-ink" style={{ opacity: isCollapsed ? 0 : 1, transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
-          VANTAGE
+    <aside className={`flex h-screen shrink-0 flex-col border-r border-border bg-sidebar transition-[width] duration-200 ${isCollapsed ? 'w-[72px]' : 'w-[260px]'}`}>
+      <div className="flex h-[68px] items-center justify-between border-b border-border px-4">
+        <div className={`flex items-center gap-3 overflow-hidden ${isCollapsed ? 'w-0 opacity-0' : 'opacity-100'}`}>
+          <div className="flex size-8 shrink-0 items-center justify-center border border-gold/50 bg-gold/10 text-xs font-bold text-gold">V</div>
+          <div className="whitespace-nowrap"><div className="text-sm font-semibold tracking-[0.24em] text-foreground">VANTAGE</div><div className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground">Financial intelligence</div></div>
         </div>
-        <PressFeedback onClick={onToggle} className="p-1 rounded-md">
-          <div
-            className="text-ink hover:text-accent transition-colors flex items-center justify-center"
-            style={{ width: '32px', height: '32px' }}
-          >
-            {isCollapsed ? '≡' : '☰'}
-          </div>
-        </PressFeedback>
+        <button aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} onClick={onToggle} className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground">
+          {isCollapsed ? <ChevronsRight /> : <ChevronsLeft />}
+        </button>
       </div>
-
-      <nav className="flex-1 overflow-y-auto">
-        <ul className="space-y-1 px-2">
-          {sections.map((section) => (
-            <li key={section.id}>
-              <NavItem
-                section={section}
-                isActive={activeSection === section.id}
-                onClick={() => setActiveSection(section.id)}
-                isCollapsed={isCollapsed}
-              />
-            </li>
-          ))}
-        </ul>
+      <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-4" aria-label="Primary navigation">
+        {groups.map((group) => {
+          const isOpen = open[group.label];
+          return <div key={group.label} className="mb-4">
+            {!isCollapsed && <button onClick={() => setOpen((value) => ({ ...value, [group.label]: !isOpen }))} className="mb-1 flex w-full items-center justify-between px-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"><span>{group.label}</span>{isOpen ? <ChevronDown /> : <ChevronRight />}</button>}
+            {(isCollapsed || isOpen) && <div className="flex flex-col gap-0.5">{group.items.map(([label, Icon]) => <button key={label} onClick={() => setActive(label)} title={isCollapsed ? label : undefined} className={`flex items-center gap-3 rounded-md px-2.5 py-2 text-left text-xs transition-colors ${active === label ? 'bg-gold/10 text-gold' : 'text-muted-foreground hover:bg-muted/30 hover:text-foreground'} ${isCollapsed ? 'justify-center' : ''}`}><Icon /><span className={isCollapsed ? 'sr-only' : ''}>{label}</span>{active === label && !isCollapsed && <span className="ml-auto size-1.5 rounded-full bg-gold" />}</button>)}</div>}
+          </div>;
+        })}
       </nav>
-
-      <div className="p-4 border-t border-border" style={{ opacity: isCollapsed ? 0 : 1, transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
-        <div className="text-sm text-muted mb-2">Status</div>
-        <div className="space-y-2">
-          <div className="flex items-center text-sm">
-            <span className="w-2 h-2 rounded-full bg-success mr-2"></span>
-            <span>Platform Ready</span>
-          </div>
-          <div className="flex items-center text-sm">
-            <span className="w-2 h-2 rounded-full bg-warning mr-2"></span>
-            <span>Data Syncing</span>
-          </div>
-          <div className="flex items-center text-sm">
-            <span className="w-2 h-2 rounded-full bg-error mr-2"></span>
-            <span>Alerts: 3</span>
-          </div>
-        </div>
+      <div className={`border-t border-border p-3 ${isCollapsed ? 'flex justify-center' : ''}`}>
+        {isCollapsed ? <PanelLeft className="text-muted-foreground" /> : <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.12em] text-muted-foreground"><span className="size-1.5 rounded-full bg-emerald-500" /> Terminal ready <span className="ml-auto font-mono text-foreground">v0.1</span></div>}
       </div>
-    </div>
+    </aside>
   );
-};
-
-export default Sidebar;
+}
