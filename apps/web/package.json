@@ -14,8 +14,7 @@
     "test:coverage": "vitest run --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "clean": "rm -rf node_modules/.cache",
-    "prepare": "husky install"
+    "clean": "rm -rf node_modules/.cache"
   },
   "dependencies": {
     "next": "14.2.4",
@@ -28,7 +27,7 @@
     "@types/node": "20.14.2",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.72.0",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
     "@vitejs/plugin-react": "4.2.1",
     "autoprefixer": "10.4.19",
     "eslint": "8.57.0",
